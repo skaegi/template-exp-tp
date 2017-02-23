@@ -3,7 +3,7 @@ template:
   name: Upgrade to Toolchain
   description: 
     $ref: description.md
-  header: ![](toolchain.svg)
+  header: "![](toolchain.svg)"
 
 toolchain:
   name: "{{projectName}}"
