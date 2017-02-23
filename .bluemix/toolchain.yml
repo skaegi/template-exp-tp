@@ -1,17 +1,10 @@
----
-name: Upgrade to Toolchain
-description: "
-  A toolchain is an open, extensible system of tools that supports the development, deployment, and operations of an application.\n\n
-  
-  #### About the Upgrade Process\n
-  When you create this toolchain, it is preconfigured with GitHub for source control, Delivery Pipeline for building and deployment, and the Eclipse Orion Web IDE for code editing. You can add more tools to the toolchain as needed. To get started, click **Create**.\n\n
-  
-  #### More Info\n
-  [Tutorial: Upgrade your project to a toolchain](https://ibm.biz/ids-upgrade-blogpost)\n\n
-  [Docs: Getting started with Continuous Delivery](https://console.ng.bluemix.net/docs/services/ContinuousDelivery/index.html)\n\n
-  [Blog: Bluemix Continuous Delivery](https://www.ibm.com/blogs/bluemix/2016/11/bluemix-continuous-delivery-is-now-live/)\n
-  "
-image: data:image/svg+xml;base64,$file(toolchain.svg,base64)
+version: 2
+template:
+  name: Upgrade to Toolchain
+  description: 
+    $ref: description.md
+  header: ![](toolchain.svg)
+
 toolchain:
   name: "{{projectName}}"
   generator: migration-engine
@@ -22,44 +15,39 @@ toolchain:
      - deploy
      - repo
 
-# Github repos
-repo:
-  service_id: githubpublic
-  parameters:
-    repo_name: "{{projectName}}"
-    repo_url: "{{projectRepoUrl}}"
-    type: link
-    has_issues: true
-  hidden: [form, description]       
+services:
+  repo:
+    service_id: githubpublic
+    parameters:
+      repo_name: "{{projectName}}"
+      repo_url: "{{projectRepoUrl}}"
+      type: link
+      has_issues: true    
 
-# Pipelines
-build:
-  service_id: pipeline
-  parameters:
-    name: "{{projectName}}"
-    v1-projectId: "{{projectId}}"
-    services: ["repo"]
-    configuration: 
-     content: "{{pipelineContent}}"
-     execute: false
-     env:
-      REPO: "repo"
-     source:
-       environment: "{{pipelineEnv}}"
-       version: v1
-       pipelineUrl: "{{pipelineUrl}}"
-       projectUrl: "{{projectUrl}}"
-       showLink: true 
-  hidden: [form, description]    
-       
-#Web IDE
-webide:
-  service_id: orion
+  build:
+    service_id: pipeline
+    parameters:
+      name: "{{projectName}}"
+      v1-projectId: "{{projectId}}"
+      services: ["repo"]
+      configuration: 
+      content: "{{pipelineContent}}"
+      execute: false
+      env:
+        REPO: "repo"
+      source:
+        environment: "{{pipelineEnv}}"
+        version: v1
+        pipelineUrl: "{{pipelineUrl}}"
+        projectUrl: "{{projectUrl}}"
+        showLink: true 
 
-#Github
-github:
-  schema:
-    $ref: github.json
-  service-category: githubpublic
-  parameters:
-    repo_url: "{{projectRepoUrl}}"
+  webide:
+    service_id: orion
+
+form:
+  githubpublic:
+    schema:
+      $ref: github.json
+    parameters:
+      repo_url: "{{projectRepoUrl}}"
