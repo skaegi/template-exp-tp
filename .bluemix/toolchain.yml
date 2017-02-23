@@ -52,3 +52,4 @@ form:
       $ref: github.json
     parameters:
       repo_url: "{{projectRepoUrl}}"
+      repo_type: "Existing"

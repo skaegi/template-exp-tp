@@ -11,8 +11,7 @@
       },
       "repo_type": {
         "type": "string",
-        "title": "Repository type",
-        "default": "Existing"
+        "title": "Repository type"
       }
     },
     "form": [
@@ -20,11 +19,11 @@
         "type": "string",
         "key": "repo_type",
         "readonly": "true"
-       }, {
-      "description": "The repository that your toolchain will link to.",
-      "type": "string",
-      "key": "repo_url",
-      "readonly": "true"
-     }
+      }, {
+        "description": "The repository that your toolchain will link to.",
+        "type": "select",
+        "key": "repo_url",
+        "enum": ["a","b"]
+      }
     ]
 }
